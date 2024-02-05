@@ -1,0 +1,30 @@
+" A working setup to develop minicomp.
+
+set number
+set hlsearch
+
+syntax on
+filetype on
+filetype plugin indent on
+
+" Python
+autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
+autocmd Filetype python setlocal listchars=tab:▸\.,trail:€
+autocmd Filetype python setlocal list autoindent smartindent
+au BufEnter,BufRead *.py setlocal smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+
+function Set_up_env()
+	" sets terminal to be 63 symbols wide and as high as the
+	" current window:
+	set termwinsize=0x63
+	" opens terminal with the size above in a vertical split:
+	" splits to bo[ttomright]
+	vert bo ter
+	:exe "normal \<C-w>h"
+	:cd minicomp
+	:e main.py
+	" TODO: filetype does not autodetect for some reason, fix this:
+	:set filetype=python
+endfunction
+" An autocommand to run when entering Vim. This one just calls env setup.
+autocmd VimEnter * call Set_up_env()

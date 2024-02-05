@@ -1,0 +1,53 @@
+" An example of Vim settings to make it work with minicomp.
+" Not very generic, must be considered a PoC only.
+" Assumes 'xa' to be the assembler used.
+
+set number
+set hlsearch
+syntax on
+filetype on
+filetype plugin indent on
+
+" Now starting everything up locally:
+" The function must begin with a capital letter.
+function CompileThis()
+	" %:r extracts filename
+	:!xa -o %:r.bin %
+	" This is how I detect that shell has not erred:
+	if v:shell_error != 0
+		return 1
+	endif
+	return 0
+endfunction
+
+function CompileAndReloadThis()
+	let result = CompileThis()
+	if result == 0
+		:let binname="reload ".expand('%:t:r').".bin\nreset\n"
+		" Sends binname to running minicomp instance:
+	       	:call term_sendkeys(2, binname)
+	endif
+endfunction
+
+function Set_up_env()
+	" sets terminal to be 63 symbols wide and as high as the
+	" current window:
+	set termwinsize=0x63
+	" opens terminal with the size above in a vertical split:
+	" splits to bo[ttomright]
+	vert bo ter
+	" and executes a couple of commands to position windows correctly
+	" :exe "normal \<C-w>\<C-r>"
+	:call term_sendkeys(2, "./runem\n")
+	:exe "normal \<C-w>h"
+	:Lex 20
+	" And go back to the main window
+	:exe "normal \<C-w>l"
+	" Ctrl-F9 compiles and reloads, keeps focus in minicomp
+	nnoremap <C-F9> :call CompileAndReloadThis()<CR>
+	" F9 just compiles
+	nnoremap <F9> :call CompileThis()<CR>
+endfunction
+
+" An autocommand to set up the environment when entering Vim.
+autocmd VimEnter * call Set_up_env()

@@ -1,0 +1,6 @@
+#!/bin/bash
+# Runs behave tests
+pushd .
+cd minicomp
+behave ../tests/features -s $@
+popd

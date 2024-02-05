@@ -1,0 +1,4 @@
+#!/bin/bash
+# Start Vim to work on minicomp
+
+vim -N -u .vimrc.local

@@ -1,0 +1,4 @@
+#!/bin/bash
+# Runs doctests for all modules.
+
+python3 -m doctest minicomp/*.py
