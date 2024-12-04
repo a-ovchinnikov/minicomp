@@ -8,7 +8,7 @@ unusable then what about 50x8?" without soldering a 6502 computer together.
 The system as it is now is a bit of a stream of consiousness written down
 during some sparse odd free hours. Its emulation core is derived from
 [py65emu](https://github.com/docmarionum1/py65emu).  It needs some 6502
-assembly, I tested it with [xa](https://github.com/docmarionum1/py65emu).
+assembly, I tested it with [xa](https://www.floodgap.com/retrotech/xa).
 Features most important for me are specified with
 [Gherkin](https://cucumber.io/docs/gherkin/) and could be tested with
 [behave](https://behave.readthedocs.io/en/latest/) by running ```./bhave``` in
